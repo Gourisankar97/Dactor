@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+{% load static %}
+{% static "images" as baseUrl %}
+<html lang="en">
+<head>
+        <link rel="icon" href="static/img/icon.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <title>Appoint Doctor</title>
+    <link rel="stylesheet" href="static/style.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<!--    JQuery for the sidebar -->
+
+    </script>
+
+</head>
+<body>
+<div id="header">
+<header >
+    <nav>
+            <h1><a href="Dactor" style="text-decoration: none; color: white; cursor: pointer;">Dactor</a></h1>
+        <ul>
+                <li>
+                        <a href="logout_view" class="options" style="font-family: 'Poppins', sans-serif;"><i class="fa fa-sign-out"></i>&nbspLogout</a>
+                </li>
+            <li><a class="options" data-target="#dtmodal" data-toggle="modal"> <i class="fa fa-envelope-open fa-1x"></i>&nbsp Write to us.</a> </li>
+            <li><a href="myappointments" class="options"><i class="fa fa-clock-o fa-1x"></i>&nbspMy Appointments</a></li>
+            <li><a href="Account_Info" class="options" ><i class="fa fa-user fa-1x"></i>&nbspMy Account</a></li>
+
+        </ul>
+    </nav>
+</header>
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12 ">
+            <div style="margin-top: 30px;">
+                {% block body %}
+                {% for dt in dr_details%} 
+                
+                <table align="center" style="text-align: left;">
+                    <tr>
+                        <td rowspan="8">
+                                <img src="{{dt.Dr_photo.url}}" 
+                                style="height: 260px; width: 250px; border: 4px solid #ddd; border-radius: 10px; padding: 5px;">
+                        </td>
+                        <td style="padding-left: 20px; font-size:23px;  font-family: Calibri Light bold">
+                           Dr. {{dt.Dr_name}}
+
+                        </td>
+                    <tr>
+                        <td style="padding-left: 20px; font-size:large;  font-family: Calibri Light ">
+                                <i class="fa fa-stethoscope" id="tdsp"></i>&nbsp;{{dt.Dr_specialization}}
+                        </td>
+                    </tr>
+                    <tr>
+                            <td style="padding-left: 20px; font-size:large;  font-family: Calibri Light">
+                                    <i class="fa fa-user-md"></i> {{dt.Dr_Details}}
+                            </td>
+                        </tr>
+                        <tr>
+                                <td style="padding-left: 20px; font-size:large;  font-family: Calibri Light">
+                                        <i class="fa fa-clock-o" id="tdt"></i>&nbsp {{dt.Dr_timeings}}
+                                </td>
+                            </tr>
+                            <tr>
+                                    <td style="padding-left: 20px; font-size:large;  font-family: Calibri Light">
+                                            <i class="fa fa-phone"></i>&nbsp {{dt.Dr_phone_no}}
+                                    </td>
+                                </tr
+                    <tr>   
+                        <td style="padding-left: 20px; font-size:large;  font-family: Calibri Light">
+                                <i class="fa fa-home" id="tdl"></i>&nbsp{{dt.Dr_address}}
+                        </td>
+                    </tr>
+                    {% endfor%}
+                    
+                    
+                    
+                </table>
+                
+        </div>    
+        </div>
+         <div class="col-md-6 col-sm-6 col-xs-12 ">   
+             <form method="POST" action="fix_appointment">
+                 {% csrf_token%}
+                 
+                 <div style="margin-top: 30px;"> <label style="font-size: large;">Patient name.</label></div>
+                 <input type="hidden" name="My_id" id="my_id" value="{{my_id}}">
+                 
+                 <input type="text" class="form-control" id="pname" name="pname" placeholder="Patient Name">
+                 <div style="margin-top: 10px;"> <label style="font-size: large;">Choose Date</label></div>
+                 <input type="date" class="form-control" id="mydate" name="mydate">
+                 <div style="margin-top: 20px;">
+                        {% for dt in dr_details%} 
+                 <button type="submit" value="{{dt.id}}" name="fix" onclick="return validate()" class="form-control btn-primary">Fix Appointment</button>
+             </div>
+             </form>
+                         {% endfor %}    
+         </div>
+         {% endblock %}
+    </div>
+</div>
+<!--Dr. login modal-->
+<div class="modal fade" id="dlmodal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" style="height: 90px">
+                    <h3 class="text-center text-primary">Doctor Login
+                    <button type="button" class="close " data-dismiss="modal">&times;</button>
+                    </h3>
+
+                </div>
+                <form>
+                <div class="modal-body">
+
+                        <div class="form-group">
+                            <label style="font-family: Gabriola; font-size: 40px">
+                                <i class="fa fa-user-md"></i>user id
+                            </label>
+                            <input type="text" class="form-control" >
+                        </div>
+                        <div class="form-group">
+                            <label style="font-family: Gabriola; font-size: 40px">
+                                <i class="fa fa-lock"></i>password
+                            </label>
+                            <input type="password" class="form-control" >
+                        </div>
+
+
+                </div>
+                <div class="modal-footer" style="text-align: center">
+                    <button class="btn btn-success" data-dismiss="modal" style="width: 150px">Login
+                    </button>
+                </div>
+                     </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Write us modal-->
+<div class="modal fade" id="dtmodal"  style="transition: all .5s">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="height: 90px">
+                    <h3 class="text-center text-primary">Write to us.
+                    <button type="button" class="close " data-dismiss="modal">&times;</button>
+                    </h3>
+
+                </div>
+                <form id="feedback">
+                        {% csrf_token %}
+                    <div class="modal-body">
+    
+                            <div class="form-group">
+                                <label style="font-family: Gabriola; font-size: 20px">
+                                   <i class="fa fa-user-o"></i>Name
+                                </label>
+                                <input type="text" required id="name" class="" style=" border: none; border-bottom: 1px solid dimgrey; width: 100%">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-family: Gabriola; font-size: 20px">
+                                    <i class="fa fa-envelope-o"></i>Email
+                                </label>
+                                <input type="text" required id="F_email" class="" style="border: none; border-bottom: 1px solid dimgrey; width: 100%">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-family: Gabriola; font-size: 20px">
+                                    <i class="fa fa-pencil"></i>Describe your Query.
+                                </label>
+                                <textarea required id="feedback_message" class="form-control" style="height: 150px" placeholder="write something..."></textarea>
+                            </div>
+    
+    
+                    </div>
+                    <div class="modal-footer" style="text-align: center">
+                        <button class="btn btn-success" type="submit"  style="width: 150px">submit
+                        </button>
+                    </div>
+                         </form>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function validate(){
+        
+        var pname = document.getElementById("pname");
+        var date = document.getElementById("mydate");
+        if(pname.value == "" || date.value == ""){
+            alert("Please enter the paitent name and choose a Date");
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
+</script>
+<!-- feedback ajax script -->
+<script>
+        $(document).on('submit', '#feedback', function(e){
+                e.preventDefault();
+                $.ajax({
+                    type:'POST',
+                    url:'feedback',
+                    data:{
+                        name:$('#name').val(),
+                        email:$('#F_email').val(),
+                        feedback:$('#feedback_message').val(),
+                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success:function(){
+                            alert(" Thanks for your feedback !! We will contact you ASAP! ");
+                            
+    
+                    }
+                });
+        });
+    
+    </script>
+<!-- footer -->
+<div style="margin-top: 20%; text-align: center; width: 100%; background-color: rgb(6, 122, 255); padding: 20px;">
+
+    <div style="color: rgb(35, 213, 230);">© 2019 Copyright:&nbsp;<a href="index" style="color: white;">Dactor.in</a></div>
+    </div> 
+</body>
+</html>

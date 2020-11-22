@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+{%load static%}
+{% static "images" as baseUrl %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="static/img/icon.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lilita+One|Patua+One&display=swap" rel="stylesheet">
+    <title>Appoint Doctor</title>
+    <link rel="stylesheet" href="static/style.css" media="screen"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<!--    JQuery for the sidebar -->
+    <!-- <script>
+        $(document).ready(function () {
+            $("#sidebar").hide();
+
+            $("#bookappoint").click(function () {
+               $("#sidebar").fadeIn("slow")
+               $("#toggle-sidebar").click(function () {
+                  $("#sidebar").fadeOut("slow");
+               });
+
+
+              $("#FixAppont").click(function () {
+                  $("#sidebar").fadeOut("slow")
+              });
+            });
+
+        }); -->
+
+    <!-- </script> -->
+</head>
+<body bgcolor="white">
+<div id="header">
+<header >
+    <nav>
+            <h1><a href="Dactor" style="text-decoration: none; color: white; cursor: pointer;">Dactor</a></h1>
+        <ul>
+                <li>
+                        <a href="logout_view" class="options" style="font-family: 'Poppins', sans-serif;"><i class="fa fa-sign-out"></i>&nbspLogout</a>
+                </li>
+            <li><a class="options" style="font-family: 'Poppins', sans-serif;" data-target="#dtmodal" data-toggle="modal"> <i class="fa fa-envelope-open fa-1x"></i>&nbsp Write to us.</a> </li>
+
+            <li><a href="myappointments" style="font-family: 'Poppins', sans-serif;" class="options"><i class="fa fa-clock-o fa-1x"></i>&nbspMy Appointments</a></li>
+            <li>
+                <a  href="Account_Info"  class="options" style="font-family: 'Poppins', sans-serif;"><i class="fa fa-user fa-1x"></i>&nbspMy Account</a>
+            </li>
+            
+            
+
+        </ul>
+    </nav>
+</header>
+    </div>
+<!--Search-bar row-->
+<div class="container" style="padding-top: 50px;">
+    <div class="row">
+<!--        <div class="col-md-2 col-sm-2 col-xs-12"></div>-->
+        <div class="col-md-12 col-sm-12 col-xs-12" style="padding-top: 25px;">
+            <div style="text-align: center">
+            <ul class="search" style="display: inline;" >
+                <form id="search" action="search">
+                <li>
+                    <div>
+                    <h4 style="font-family: 'Poppins', sans-serif; font-weight: bolder;">City.</h4>
+                    </div>
+                </li>
+                <li style="font-family: 'Poppins', sans-serif; font-weight: bolder;">
+                    <select class="form-control" name="city" id="city">
+                        <option value="0" selected hidden> Select your city</option>
+                        <option value="Anugul">Anugul</option>
+                        <option value="Baripada">Baripada</option>
+                        <option value="Bhubaneswar">Bhubaneswar</option>
+                        <option value="Bhadrak">Bhadrak</option>
+                        <option value="Cuttack">Cuttack</option>
+                        <option value="Jajpur">Jajpur</option>
+                        <option value="Khordha">Khordha</option>
+                        <option value="Rourkela">Rourkela</option>
+                    </select>
+                </li>
+                <li> <div style="margin-left: 20px"> {% block body %}
+                    <h4 style="font-family: 'Poppins', sans-serif; font-weight: bolder;">Specialist in</h4>
+                     </div> 
+                </li>
+                <li style="font-family: 'Poppins', sans-serif; font-weight: bolder;">
+                    <select class="form-control" name="dr_specialization" id="dr_specialization">
+                        <option value="0" selected hidden> Select Specialization</option>
+                        <option value="Medicine Specialist">Medicine Specialist</option>
+                        <option value="Dermatologist">Dermatologist</option>
+                         <option value="Endocrinologist">Endocrinologist</option>
+                         <option value="Gastroenterologist">Gastroenterologist</option>
+                         <option value="Cardiologist">Cardiologist</option>
+                         <option value="Pediatricians">Pediatricians</option>
+                         <option value="Oncologist">Oncologist</option>
+                         <option value="Hematologist">Hematologist</option>
+                         <option value="Gyning Specialist">Gyning Specialist</option>
+
+
+                    </select>
+                </li>
+                <li>
+                    <div style="margin-left: 20px">
+                     <button type="submit" onclick="return search()" class="btn btn-primary form-control"><i class="fa fa-search"></i></button>
+                    </div>
+                </li>
+
+                    </form>
+
+            </ul>
+            </div>
+
+        </div>
+<!--        <div class="col-md-2 col-sm-2 col-xs-12"></div>-->
+
+<!--    Drs row    -->
+        <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-12 "
+                 style="text-align: center; border-top: 1px solid aquamarine ; border-right: 1px solid aquamarine;">
+                <div style="padding-top: 20px" id="sb">
+                    <ul class="search">
+                        {% for drs in dr_details %}
+                        <li>
+                            <div class="card" style="height: 100px; width: 200px; background-color:lightgray;
+                            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+                            padding: 0px 0px 15px 0px; text-align: center;
+                            align-content: center; margin-top: 20px; margin-right: 20px">
+
+                                <table border="0" style="width:190px">
+                                    <tr>
+                                        <td rowspan="4" style="padding-right: 10px"><img src="{{drs.Dr_photo.url}}" style="width:70px; height: 70px; object-fit: cover;"> </td>
+                                        <td style="font-size:xx-small; text-align: left;  font-family: 'Poppins', sans-serif; font-weight: bolder;" id="tdname">Dr. {{drs.Dr_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: xx-small; text-align: left; color: rgb(5, 24, 56); font-family: 'Patua One', cursive;"><i class="fa fa-stethoscope" id="tdsp"></i>&nbsp{{drs.Dr_specialization}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: xx-small; text-align: left; color: dimgrey; font-family: 'Poppins', sans-serif; "> <i class="fa fa-home" id="tdl"></i>&nbsp{{drs.Dr_address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: x-small; text-align: left; color: dimgrey; font-family: 'Poppins', sans-serif;"><i class="fa fa-clock-o" id="tdt"></i>&nbsp{{drs.Dr_timeings}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="padding-top: 5px">
+                                            <form action="Appointment">
+                                            <button type="submit" class="btn-link btnappt" value="{{drs.id}}" name="drid"
+                                            style="font-family: 'Poppins', sans-serif;" id="bookappoint">BOOK Appoint.</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <hr style="margin-top: -30px">
+
+
+                            </div>
+
+                        </li>
+                        {% endfor %}                   
+                    </ul>
+                    
+                    
+                    <div><h3 style="color:rgb(133, 141, 141) ;">{{message}}</h3></div>
+                   
+                    
+                </div>
+
+                <div style="margin-top: 100px;">
+                        <nav aria-label="Page navigation example">
+                            {% if dr_details.has_other_pages %}
+                                <ul class="pagination">
+                                    {% if dr_details.has_previous %}
+                                  <li class="page-item"><a class="page-link" href="?page={{dr_details.previous_page_number}}">&laquo;</a></li>
+                                    {% else %}
+                                  <li class="disabled"><span>&laquo;</span></li>
+                                    {% endif  %}
+                                    {% for i in dr_details.paginator.page_range %}
+                                        {% if dr_details.number == i %}
+                                            <li class="active"><span>{{i}}<span class="sr-only">(current)</span></span></li>
+                                        {% else %}
+                                            <li><a href="?page={{i}}">{{i}}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if dr_details.has_next %}
+                                  <li class="page-item"><a class="page-link" href="?page={{user.next_page_number}}">&raquo;</a></li>
+                                    {% else %}
+                                  <li class="disabled"><span>&raquo;</span></li>
+                                    {% endif %}
+                                </ul>
+                            {% endif %}
+                              </nav>{% endblock %}
+                </div>
+                
+            </div>
+<!--            Ad block        -->
+            <div class="col-md-4 col-sm-4 col-xs-12 ad" style="margin-top: 30px;">
+                <img src="static/img/ad_banner-512.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Write us modal-->
+<div class="modal fade" id="dtmodal"  style="transition: all .5s">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="height: 90px">
+                    <h3 class="text-center text-primary">Write to us.
+                    <button type="button" class="close " data-dismiss="modal">&times;</button>
+                    </h3>
+
+                </div>
+                <form id="feedback">
+                        {% csrf_token %}
+                    <div class="modal-body">
+    
+                            <div class="form-group">
+                                <label style="font-family: 'Poppins', sans-serif; font-weight: bolder; font-size: 20px">
+                                   <i class="fa fa-user-o"></i>Name
+                                </label>
+                                <input type="text" required id="name" class="" style=" border: none; border-bottom: 1px solid dimgrey; width: 100%">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-family: 'Poppins', sans-serif; font-weight: bolder; font-size: 20px">
+                                    <i class="fa fa-envelope-o"></i>Email
+                                </label>
+                                <input type="text" required id="F_email" class="" style="border: none; border-bottom: 1px solid dimgrey; width: 100%">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-family: 'Poppins', sans-serif; font-weight: bolder; font-size: 20px">
+                                    <i class="fa fa-pencil"></i>Describe your Query.
+                                </label>
+                                <textarea required id="feedback_message" class="form-control" style="height: 150px" placeholder="write something..."></textarea>
+                            </div>
+    
+    
+                    </div>
+                    <div class="modal-footer" style="text-align: center">
+                        <button class="btn btn-success" type="submit"  style="width: 150px">submit
+                        </button>
+                    </div>
+                         </form>
+            </div>
+        </div>
+    </div>
+
+<!--javascript -->
+<script>
+    function search(){
+        var city = document.getElementById("city");
+        var dr_spec = document.getElementById("dr_specialization");
+
+        if(city.value == '0' && dr_spec.value == '0' )
+        {
+            alert("Please select The city or Dr specialization to search !");
+            return false;
+        }
+    }
+
+</script>
+
+<!-- feedback ajax script -->
+<script>
+        $(document).on('submit', '#feedback', function(e){
+                e.preventDefault();
+                $.ajax({
+                    type:'POST',
+                    url:'feedback',
+                    data:{
+                        name:$('#name').val(),
+                        email:$('#F_email').val(),
+                        feedback:$('#feedback_message').val(),
+                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success:function(){
+                            alert(" Thanks for your feedback !! We will contact you ASAP! ");
+                            
+    
+                    }
+                });
+        });
+    
+    </script>
+
+<!-- footer -->
+<div style="margin-bottom: 0px; text-align: center; width: 100%; background-color: rgb(6, 122, 255); padding: 20px;">
+
+<div style="color: rgb(35, 213, 230);">© 2019 Copyright:&nbsp;<a href="index" style="color: white;">Dactor.in</a></div>
+</div> 
+</body>
+</html>

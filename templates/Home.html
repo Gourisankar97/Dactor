@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+        <link rel="icon" href="static/img/icon.png" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+        <!-- <link rel="stylesheet" type='text/css' media='screen' href="static/style2.css"> -->
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Appoint Doctor</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <link rel="stylesheet" media='screen' href="static/style.css"/>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".signup-form").hide();
+        $(".signup").css("background","none");
+        $(".log").css("background","#4af0f0");
+
+        $(".log").click(function () {
+            $(".signup-form").hide();
+            $(".login-form").show();
+            $(".signup").css("background","none");
+            $(".log").css("background","#4af0f0");
+        });
+        $(".signup").click(function () {
+            $(".login-form").hide();
+            $(".signup-form").show();
+            $(".signup").css("background","#4af0f0");
+            $(".log").css("background","none");
+        });
+        $("#cancelappt").click(function () {
+           alert("Please Login to perform the action!")
+        });
+
+    });
+</script>
+<style>
+        #message {
+            width: fit-content;
+            display:none;
+            background: #f1f1f1;
+            color: #000;
+            position: relative;
+            padding: 5px;
+            margin-top: 5px;
+          }
+          #message p {
+            padding: 5px 10px;
+            font-size: 14px;
+          }
+        /* Add a green text color and a checkmark when the requirements are right */
+  .valid {
+    color: green;
+  }
+  
+  .valid:before {
+    position: relative;
+    left: -35px;
+    content: "✔";
+  }
+  
+  /* Add a red text color and an "x" when the requirements are wrong */
+  .invalid {
+    color: red;
+  }
+  
+  .invalid:before {
+    position: relative;
+    left: -35px;
+    content: "✖";
+  }
+  #alert{
+      display: block;
+  }
+</style>
+
+</head>
+<body class="body">
+
+<div>
+<header>
+    <nav>
+        <h1><a href="#" style="text-decoration: none; color: white; cursor: pointer; font-family: 'Poppins', sans-serif;">Dactor</a></h1>
+        <ul>
+            <li><a class="options" data-target="#dtmodal" data-toggle="modal"> <i class="fa fa-envelope-open fa-1x"></i>&nbsp Write to us.</a> </li>
+            <li><a href="#" class="options" id="cancelappt"><i class="fa fa-clock-o fa-1x"></i>&nbspMy Appointments</a></li>
+            <li><a class="options dl" data-target="#dlmodal" data-toggle="modal"><i class="fa fa-user-md fa-1x"></i>&nbsp Doctor Login</a></li>
+
+
+        </ul>
+    </nav>
+</header>
+</div>{% block body %}
+
+<div class="container-fluid bg container">
+        <div class="alert alert-success" style="text-align: center;" id="alert" role="alert">
+                <p style="color: rgb(43, 200, 15);" id="msg">{{msg}}</p>
+              </div>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            
+
+            <div class="log"><label>login</label></div>
+            <div class="signup"><label>sign up</label></div>
+            <form id="log" class="login-form" action="login" method="post">
+                    <div id="email_taken"><span style="color: red; font-size: smaller;">{{email_taken}}</span></div>
+                    <div id="username_taken"><span style="color: red; font-size: smaller;">{{username_taken}}</span></div>
+                {% csrf_token %}
+
+                 <div class="form-group">
+                     <div id="error_msg"><span style="color: red; font-size: smaller;">{{error_msg}}</span></div>
+                     
+                     
+                    <label>Username.</label>
+                    <input type="text" class="form-control" onkeyup="Usernamel()" id="username" name="username" placeholder="phone number">
+                 </div>
+                 <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="lpwd" name="lpwd" onkeyup="passwordvalid()" class="form-control" placeholder="password">
+                 </div>
+                 <div class="checkbox">
+
+                       <label><input type="checkbox"> Remember me</label>
+                 </div>
+                 <div style="margin-top:10px; margin-bottom: 10px;">
+
+                        <a href="forgot_password" style="color: rgb(14, 7, 77); cursor: pointer;">forgot password?</a>
+                  </div>
+
+                    <input type="submit" value="Login" onclick="return login_validation()" class="btn btn-success btn-block"></input>
+
+            </form>
+            <form id="sign" class="signup-form" action="register" method="post" >
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>First Name.</label>
+                    <input required type="text" id="first_name" name="first_name" onkeyup="lettersOnly(this)" class="form-control" placeholder="Enter your first name">
+                </div>
+                <div class="form-group">
+                    <label>Last Name.</label>
+                    <input required type="text" id="last_name" name="last_name" onkeyup="lettersOnly(this)" class="form-control" placeholder="Enter your last name">
+                </div>
+                <div class="form-group">
+                    <label>Email id.</label>
+        
+                    <input required type="email" id="email" onkeyup="Email()" name="email" class="form-control" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label>Create a username</label>
+                    <input required type="text" onkeyup="Username()" id="user_name" name="user_name" class="form-control" placeholder="create a username">
+                 </div>
+                 <div class="form-group">
+                    <label>Password</label>
+                    <input required type="password" id="pwd" name="pwd" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="form-control" placeholder="password">
+                    <div id="message" style="width: 50%;">
+                            <p style="font-size: 13px; font-weight: bold;">Password must contain the following:</p >
+                            <p id="letter" class="invalid" style="font-size: 13px; font-weight: bold;">A lowercase letter</p>
+                            <p id="capital" class="invalid" style="font-size: 13px; font-weight: bold;">A capital (uppercase) letter</p>
+                            <p id="number" class="invalid" style="font-size: 13px; font-weight: bold;">A number</p>
+                            <p id="length" class="invalid" style="font-size: 13px; font-weight: bold;">Minimum 8 characters</p>
+                 </div>
+                <div style="margin-top: 20px;">
+                    <input type="submit" onclick="return validate()" class="btn btn-primary btn-block"> </div>
+
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+
+<!-- dr login Modal-->
+
+    <div class="modal fade" id="dlmodal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="height: 90px">
+                    <h3 class="text-center text-primary">Doctor Login
+                    <button type="button" class="close " data-dismiss="modal">&times;</button>
+                    </h3>
+
+                </div>
+                <form action="dr_login" method="POST">
+                    {% csrf_token %}
+                    
+                <div class="modal-body">
+
+                        <div class="form-group">
+                            <label style="font-family: Gabriola; font-size: 40px">
+                                <i class="fa fa-user-md"></i>user id (Email)
+                            </label>
+                            <input required type="text" name="dr_email" class="form-control" >
+                        </div>
+                        <div class="form-group">
+                            <label style="font-family: Gabriola; font-size: 40px">
+                                <i class="fa fa-lock"></i>password
+                            </label>
+                            <input required type="password" name="dr_pwd" class="form-control" >
+                        </div>
+
+
+                </div>
+                <div class="modal-footer" style="text-align: center">
+                    <button class="btn btn-success" type="submit" style="width: 150px">Login
+                    </button>
+                </div>
+                     </form>
+            </div>
+        </div>
+    </div>
+<!--    write to us model   -->
+     <div class="modal fade" id="dtmodal"  style="transition: all .5s">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="height: 90px">
+                    <h3 class="text-center text-primary">Write to us.
+                    <button type="button" class="close " data-dismiss="modal">&times;</button>
+                    </h3>
+
+                </div>
+                <form id="feedback">
+                    {% csrf_token %}
+                <div class="modal-body">
+
+                        <div class="form-group">
+                            <label style="font-family: Gabriola; font-size: 20px">
+                               <i class="fa fa-user-o"></i>Name
+                            </label>
+                            <input type="text" required id="name" class="" style=" border: none; border-bottom: 1px solid dimgrey; width: 100%">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-family: Gabriola; font-size: 20px">
+                                <i class="fa fa-envelope-o"></i>Email
+                            </label>
+                            <input type="text" required id="F_email" class="" style="border: none; border-bottom: 1px solid dimgrey; width: 100%">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-family: Gabriola; font-size: 20px">
+                                <i class="fa fa-pencil"></i>Describe your Query.
+                            </label>
+                            <textarea required id="feedback_message" class="form-control" style="height: 150px" placeholder="write something..."></textarea>
+                        </div>
+
+
+                </div>
+                <div class="modal-footer" style="text-align: center">
+                    <button class="btn btn-success" type="submit"  style="width: 150px">submit
+                    </button>
+                </div>
+                     </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- fooetr -->
+<div style="margin-top: 10%; text-align: center; width: 100%; background-color: rgb(6, 122, 255); padding: 10px;">
+
+    <div style="color: rgb(35, 213, 230);">© 2019 Copyright:&nbsp;<a href="index" style="color: white;">Dactor.in</a></div>
+    </div> 
+
+
+<script type="text/javascript" src="static/script.js"></script>
+<!-- feedback ajax script -->
+<script>
+    $(document).on('submit', '#feedback', function(e){
+            e.preventDefault();
+            $.ajax({
+                type:'POST',
+                url:'feedback',
+                data:{
+                    name:$('#name').val(),
+                    email:$('#F_email').val(),
+                    feedback:$('#feedback_message').val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success:function(){
+                        alert(" Thanks for your feedback !! We will contact you ASAP! ");
+                        
+
+                }
+            });
+    });
+
+</script>
+
+<script type="text/javascript">
+    function lettersOnly(input){
+        var regex = /[^a-z]/gi;
+        input.value = input.value.replace(regex,"");
+
+
+    }
+
+
+    function passwordvalid(){
+        document.getElementById('msg').style.display='none'
+        document.getElementById('error_msg').style.display='none'
+        
+        var pwd = document.getElementById('lpwd').value;
+        var pass_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+        if(pass_pattern.test(pwd)){
+            document.getElementById('lpwd').style.borderColor='green'
+        }
+        else{
+            document.getElementById('lpwd').style.borderColor = 'red';
+        }
+
+    }
+    function Usernamel(){
+        document.getElementById('msg').style.display='none'
+        document.getElementById('error_msg').style.display='none'
+        
+        var usernamelogin = document.getElementById('username').value;
+        var username_pattern = /^[A-Za-z0-9_]{5,10}$/;
+        if(username_pattern.test(usernamelogin)){
+            document.getElementById('username').style.borderColor='green'
+        }
+        else{
+            document.getElementById('username').style.borderColor = 'red';
+        }
+
+    }
+    
+    
+
+    function Username(){
+        document.getElementById('username_taken').style.display='none'
+        document.getElementById('email_taken').style.display='none'
+        var username = document.getElementById('user_name').value;
+        var usernamelogin = document.getElementById('username').value;
+        var username_pattern = /^[A-Za-z0-9_]{5,10}$/;
+        if(username_pattern.test(username)){
+            document.getElementById('user_name').style.borderColor='green'
+        }
+        else{
+            document.getElementById('user_name').style.borderColor = 'red';
+        }
+    
+    }
+        function Email(){
+            document.getElementById('email_taken').style.display='none'
+            var email = document.getElementById('email').value;
+            var email_pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/
+            if(email_pattern.test(email)){
+                document.getElementById('email').style.borderColor='green'
+            }
+            else{
+                document.getElementById('email').style.borderColor = 'red';
+    
+            }
+        }
+    
+    
+</script>
+<script>
+            var myInput = document.getElementById("pwd")
+            var letter = document.getElementById("letter");
+            var capital = document.getElementById("capital");
+            var number = document.getElementById("number");
+            var length = document.getElementById("length");
+        myInput.onblur = function() {
+            document.getElementById("message").style.display = "none";
+          }
+
+        myInput.onfocus = function() {
+            document.getElementById("message").style.display = "block";
+          }
+        myInput.onkeyup = function() {
+            // Validate lowercase letters
+            var lowerCaseLetters = /[a-z]/g;
+            if(myInput.value.match(lowerCaseLetters)) {  
+              letter.classList.remove("invalid");
+              letter.classList.add("valid");
+            } else {
+              letter.classList.remove("valid");
+              letter.classList.add("invalid");
+            }
+            
+            // Validate capital letters
+            var upperCaseLetters = /[A-Z]/g;
+            if(myInput.value.match(upperCaseLetters)) {  
+              capital.classList.remove("invalid");
+              capital.classList.add("valid");
+            } else {
+              capital.classList.remove("valid");
+              capital.classList.add("invalid");
+            }
+          
+            // Validate numbers
+            var numbers = /[0-9]/g;
+            if(myInput.value.match(numbers)) {  
+              number.classList.remove("invalid");
+              number.classList.add("valid");
+            } else {
+              number.classList.remove("valid");
+              number.classList.add("invalid");
+            }
+            
+            // Validate length
+            if(myInput.value.length >= 8) {
+              length.classList.remove("invalid");
+              length.classList.add("valid");
+            } else {
+              length.classList.remove("valid");
+              length.classList.add("invalid");
+            }
+          }
+
+</script>
+
+</body>
+</html>

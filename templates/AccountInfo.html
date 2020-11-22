@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Info.</title>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+        <link rel="icon" href="static/img/icon.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <title>Appoint Doctor</title>
+    <link rel="stylesheet" href="static/style.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<style>
+    #savebtn{
+        display: none;
+    }
+    #uname{
+        display: none;
+    }
+</style>
+
+</head>
+<body bgcolor="white">
+<header>
+    <nav>
+            <h1><a href="Dactor" style="text-decoration: none; color: white; cursor: pointer;">Dactor</a></h1>
+                <ul>
+                    <li>
+                            <a href="logout_view" class="options" style="font-family: 'Poppins', sans-serif;"><i class="fa fa-sign-out"></i>&nbspLogout</a>
+                    </li>
+                    <li><a class="options" data-target="#dtmodal" data-toggle="modal"> <i class="fa fa-envelope-open fa-1x"></i>&nbsp Write to us.</a> </li>
+                    <li><a href="myappointments" class="options"><i class="fa fa-clock-o fa-1x"></i>&nbspMy Appointments</a></li>
+                    <li><a href="Account_Info" class="options" ><i class="fa fa-user fa-1x"></i>&nbspMy Account</a></li>
+        
+                </ul>
+    </nav>
+</header>
+<div class="container">
+    <div class="row">{% block body %}
+        
+        <div class="col-md-8 col-sm-8 col-xs-12" style="text-align: center;">
+            <div style="margin-top: 40px; text-align: left;">
+                <form method="POST" action="Update_Account_Info">
+                    {% csrf_token %}
+
+                    <div style="margin-bottom: 5px;"><label>first name.</label></div>
+                    <input required type="text" id="fn" name="fn" style="width: 80%;" class="form-control" value="{{user.first_name}}" placeholder="first name">
+                    <div style="margin-bottom: 5px; margin-top: 20px;"><label>last name.</label></div>
+                    <input required type="text" id="ln" name="ln" style="width: 50%;" class="form-control" value="{{user.last_name}}" placeholder="last name" ></input>
+                    <div style="margin-bottom: 5px; margin-top: 20px;"><label>Email id.</label></div>
+                    <input required type="email" id="em" name="em"  style="width: 80%;" class="form-control" value="{{user.email}}" placeholder="Email"></input>
+                    <div style="margin-bottom: 5px; margin-top: 20px;"><label>Username.</label></div>
+                    <input required type="text" id="un" readonly style="width: 80%;" class="form-control" value="{{user.username}}" placeholder="Username"></input>
+                    <div id="uname"><p style="color: red; font-size:small; font-weight: bold;">username cannot be changed</p></div>
+                    <div style="margin-bottom: 5px; margin-top: 20px;"></div>
+                    <input type="submit" id="savebtn" style="width: 25%; font-size: smaller;" class="btn btn-primary" value="save changes">
+                 </form>
+            
+                 <div style="margin-top: 50px; font-size: 15px; font-weight: bolder; cursor: pointer;"><a href="changepassword">change password!</a></div>
+                 <div id="success_pass"><p style="color: rgb(27, 165, 3); font-size:small; font-weight: bold;">{{message}}</p></div>
+            </div>
+            
+
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12" style="text-align: center;"></div>
+        
+        
+    </div> {% endblock %}
+
+<!--Write us modal-->
+<div class="modal fade" id="dtmodal"  style="transition: all .5s">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="height: 90px">
+                    <h3 class="text-center text-primary">Write to us.
+                    <button type="button" class="close " data-dismiss="modal">&times;</button>
+                    </h3>
+
+                </div>
+                <form id="feedback">
+                        {% csrf_token %}
+                    <div class="modal-body">
+    
+                            <div class="form-group">
+                                <label style="font-family: Gabriola; font-size: 20px">
+                                   <i class="fa fa-user-o"></i>Name
+                                </label>
+                                <input type="text" required id="name" class="" style=" border: none; border-bottom: 1px solid dimgrey; width: 100%">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-family: Gabriola; font-size: 20px">
+                                    <i class="fa fa-envelope-o"></i>Email
+                                </label>
+                                <input type="text" required id="F_email" class="" style="border: none; border-bottom: 1px solid dimgrey; width: 100%">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-family: Gabriola; font-size: 20px">
+                                    <i class="fa fa-pencil"></i>Describe your Query.
+                                </label>
+                                <textarea required id="feedback_message" class="form-control" style="height: 150px" placeholder="write something..."></textarea>
+                            </div>
+    
+    
+                    </div>
+                    <div class="modal-footer" style="text-align: center">
+                        <button class="btn btn-success" type="submit"  style="width: 150px">submit
+                        </button>
+                    </div>
+                         </form>
+            </div>
+        </div>
+    </div>
+<!-- feedback ajax script -->
+<script>
+        $(document).on('submit', '#feedback', function(e){
+                e.preventDefault();
+                $.ajax({
+                    type:'POST',
+                    url:'feedback',
+                    data:{
+                        name:$('#name').val(),
+                        email:$('#F_email').val(),
+                        feedback:$('#feedback_message').val(),
+                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success:function(){
+                            alert(" Thanks for your feedback !! We will contact you ASAP! ");
+                            
+    
+                    }
+                });
+        });
+    
+    </script>
+
+
+    <script>
+        var fn = document.getElementById("fn");
+        var ln = document.getElementById("ln");
+        var email = document.getElementById("em");
+        var un = document.getElementById("un");
+
+        fn.onfocus = function() {
+            document.getElementById("savebtn").style.display = "block";
+          }
+        ln.onfocus = function() {
+            document.getElementById("savebtn").style.display = "block";
+          }
+        email.onfocus = function() {
+            document.getElementById("savebtn").style.display = "block";
+          }
+        un.onfocus = function() {
+            document.getElementById("uname").style.display = "block";
+          }
+
+    </script>
+<!-- footer -->
+<div style="margin-top: 10%; text-align: center; width: 100%; background-color: rgb(6, 122, 255); padding: 20px;">
+
+    <div style="color: rgb(35, 213, 230);">© 2019 Copyright:&nbsp;<a href="index" style="color: white;">Dactor.in</a></div>
+</div> 
+</body>
+</html>

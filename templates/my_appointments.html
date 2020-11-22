@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cancel Appointment</title>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+        <link rel="icon" href="static/img/icon.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <title>Appoint Doctor</title>
+    <link rel="stylesheet" href="static/style.css" media="screen"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+<body bgcolor="white">
+    {% block body %}
+<header>
+    <nav>
+            <h1><a href="Dactor" style="text-decoration: none; color: white; cursor: pointer;">Dactor</a></h1>
+            <ul>
+                    <li>
+                            <a href="logout_view" class="options" style="font-family: 'Poppins', sans-serif;"><i class="fa fa-sign-out"></i>&nbspLogout</a>
+                    </li>
+                    <li><a class="options" data-target="#dtmodal" data-toggle="modal"> <i class="fa fa-envelope-open fa-1x"></i>&nbsp Write to us.</a> </li>
+                    <li><a href="myappointments" class="options"><i class="fa fa-clock-o fa-1x"></i>&nbspMy Appointments</a></li>
+                    <li><a href="Account_Info" class="options" ><i class="fa fa-user fa-1x"></i>&nbspMy Account</a></li>
+        
+                </ul>
+    </nav>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 col-sm-2 col-xs-12"></div>
+        <div class="col-md-8 col-sm-8 col-xs-12" style="text-align: center;">
+            <div class="appt-table" style="margin-top: 20px; text-align: center;" >
+                    
+            <table class="table" id="mytable" style="text-align: center; padding: 10px;">
+                <thead class="thead-dark" style="color: white; background-color: #272727;">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Dr. Name</th>
+                    <th scope="col"><i class="fa fa-stethoscope"></i>&nbspSpecialization</th>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col"><i class="fa fa-home"></i>&nbspLocation</th>
+                    <th scope="col"><i class="fa fa-clock-o"></i>&nbspTime</th>
+                    <th scope="col">Opt.</th>
+                </tr>
+                </thead>
+                   {% for i in myapps %}
+                   
+                   
+                    <tr>
+                      <th scope="row">#</th>
+                      <td>Dr. {{i.Dr_name}}</td>
+                      <td>{{i.Dr_specialization}}</td>
+                      <td>{{i.Patient_name}}</td>
+                      <td>{{i.Appt_Date}}</td>
+                      <td style="font-size: x-small">{{i.Dr_Adress}}</td>
+                      <td>{{i.Dr_timeings}}</td>
+                      <form action="cancel_appointment">
+                      <td><button type="submit" value="{{i.id}}" name="cnclapptid" onclick="return showconfirm()"  class="btn btn-danger">Cancel</button> </td>
+                    </form>
+                  </tr>
+                    
+                   {% endfor %}
+                
+            </table>
+            <div><h4 style="color:rgb(156, 161, 161) ;">{{message}}</h4></div>
+           </div>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-12"></div>
+    </div>
+</div>
+{% endblock %}
+<!--Write us modal-->
+<div class="modal fade" id="dtmodal"  style="transition: all .5s">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="height: 90px">
+                    <h3 class="text-center text-primary">Write to us.
+                    <button type="button" class="close " data-dismiss="modal">&times;</button>
+                    </h3>
+
+                </div>
+                <form id="feedback">
+                        {% csrf_token %}
+                    <div class="modal-body">
+    
+                            <div class="form-group">
+                                <label style="font-family: Gabriola; font-size: 20px">
+                                   <i class="fa fa-user-o"></i>Name
+                                </label>
+                                <input type="text" required id="name" class="" style=" border: none; border-bottom: 1px solid dimgrey; width: 100%">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-family: Gabriola; font-size: 20px">
+                                    <i class="fa fa-envelope-o"></i>Email
+                                </label>
+                                <input type="text" required id="F_email" class="" style="border: none; border-bottom: 1px solid dimgrey; width: 100%">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-family: Gabriola; font-size: 20px">
+                                    <i class="fa fa-pencil"></i>Describe your Query.
+                                </label>
+                                <textarea required id="feedback_message" class="form-control" style="height: 150px" placeholder="write something..."></textarea>
+                            </div>
+    
+    
+                    </div>
+                    <div class="modal-footer" style="text-align: center">
+                        <button class="btn btn-success" type="submit"  style="width: 150px">submit
+                        </button>
+                    </div>
+                         </form>
+            </div>
+        </div>
+    </div>
+<!--Dr. login modal-->
+<div class="modal fade" id="dlmodal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="height: 90px">
+                    <h3 class="text-center text-primary">Doctor Login
+                    <button type="button" class="close " data-dismiss="modal">&times;</button>
+                    </h3>
+
+                </div>
+                <form>
+                <div class="modal-body">
+
+                        <div class="form-group">
+                            <label style="font-family: Gabriola; font-size: 40px">
+                                <i class="fa fa-user-md"></i>user id
+                            </label>
+                            <input type="text" class="form-control" >
+                        </div>
+                        <div class="form-group">
+                            <label style="font-family: Gabriola; font-size: 40px">
+                                <i class="fa fa-lock"></i>password
+                            </label>
+                            <input type="password" class="form-control" >
+                        </div>
+
+
+                </div>
+                <div class="modal-footer" style="text-align: center">
+                    <button class="btn btn-success" data-dismiss="modal" style="width: 150px">Login
+                    </button>
+                </div>
+                     </form>
+            </div>
+        </div>
+    </div>
+ <!-- feedback ajax script -->
+<script>
+        $(document).on('submit', '#feedback', function(e){
+                e.preventDefault();
+                $.ajax({
+                    type:'POST',
+                    url:'feedback',
+                    data:{
+                        name:$('#name').val(),
+                        email:$('#F_email').val(),
+                        feedback:$('#feedback_message').val(),
+                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success:function(){
+                            alert(" Thanks for your feedback !! We will contact you ASAP! ");
+                            
+    
+                    }
+                });
+        });
+    
+    </script>  
+    <!-- cancel-confirmation script   -->
+<script>
+
+    function showconfirm(){
+        
+        if(confirm("Are you sure? You want to cancel the appointment!!")){
+            return true;
+        }
+        else {
+            return false;
+        }
+        
+        }
+</script>
+      
+<!-- footer -->
+<div style="margin-top: 35%; text-align: center; width: 100%; background-color: rgb(6, 122, 255); padding: 20px;">
+
+    <div style="color: rgb(35, 213, 230);">© 2019 Copyright:&nbsp;<a href="index" style="color: white;">Dactor.in</a></div>
+    </div> 
+</body>
+</html>

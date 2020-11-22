@@ -1,0 +1,236 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+   
+}
+
+
+body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    
+    
+
+}
+.body{
+    background-image: url(img/bg1.jpg);
+
+}
+.container{
+    height: 100%;
+
+}
+
+header{
+    background: darkcyan;
+    color: white;
+    /*padding: 0px 0px 6px 50px;*/
+    float: left;
+    height: 50px;
+    width:100%;
+}
+
+header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight:bolder;
+    font-size:45px;
+    margin-top: 0px;
+    margin-left: 40px;
+
+    color: aliceblue;
+
+}
+header h1 a{
+    text-decoration: none;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+
+}
+
+header li{
+    display: inline;
+    float: right;
+    padding: 0px 10px 6px 0px;
+
+}
+header ul{
+    margin-top: -50px;
+    margin-right: 70px;
+
+}
+header ul ul li a{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+nav ul li a{
+    text-decoration: none;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    font-size: 14px;
+
+}
+
+.options{
+    font-family: 'Poppins', sans-serif;
+}
+.options:hover{
+    color: transparent;
+    text-shadow: 0 0 1px lightblue;
+    text-decoration: none;
+}
+/*.full{*/
+/*    background: url('img/poryadok1.jpg') no-repeat;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    */
+/*}*/
+#log{
+    /*border: 2px solid white;*/
+    padding: 60px 40px;
+    margin-top: 90px;
+    -webkit-box-shadow: 0px 13px 41px -2px rgba(74,240,240,1);
+-moz-box-shadow: 0px 13px 41px -2px rgba(74,240,240,1);
+box-shadow: 0px 13px 41px -2px rgba(74,240,240,1);
+}
+#sign{
+    padding: 60px 40px;
+    margin-top: 90px;
+    -webkit-box-shadow: 0px 13px 41px -2px rgba(74,240,240,1);
+-moz-box-shadow: 0px 13px 41px -2px rgba(74,240,240,1);
+box-shadow: 0px 13px 41px -2px rgba(74,240,240,1);
+
+}
+
+.log,
+.signup{
+    margin-top: 50px;
+    width: 50%;
+    padding: 10px 0px 0px 0px;
+    background: none;
+    height: 40px;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: "Calibri Light";
+    font-size: 15px;
+
+}
+nav ul li a:visited{
+
+    text-decoration: none;
+    text-underline: none;
+    /*color: lightblue;*/
+    text-shadow: 0 0 1px lightblue;
+
+}
+nav ul li a:active{
+    text-decoration: none;
+    text-underline: none;
+    color: lightblue;
+    text-shadow: 0 0 1px lightblue;
+
+}
+
+.search li{
+    float: left;
+     display: inline;
+     margin-left: 20px;
+}
+.ad img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card:hover{
+    transform: scale(1.5);
+    cursor: pointer;
+}
+.card{
+    transition: 0.7s;
+}
+.btnappt a{
+
+    background-color: inherit;
+     text-decoration: none;
+    text-underline: none;
+
+}
+.btnappt a:hover{
+    text-shadow: dimgray;
+    text-decoration: none;
+    text-underline: none;
+}
+
+.sidebar-appoint{
+    position: fixed;
+    top:10%;
+    right: 0;
+    width: 350px;
+    height: auto;
+    padding: 20px;
+    background: lightblue;
+    box-shadow: 0 10px 50px rgba(0,0,0,.5);
+
+}
+.toggle{
+    position: absolute;
+    top: 0;
+    left: -30px ;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    background: darkblue;
+
+}
+.sticky{
+    position: fixed;
+    top:0;
+
+}
+.op-look:hover{
+    transform: scale(1.2);
+}
+.op-look{
+    transition: 0.7s;
+}
+
+@media screen and (max-width:650px){
+    .body{
+        background-image: url(img/crop.jpg);
+        background-repeat: no-repeat;
+        background-size:cover;
+        
+    }
+    .card{
+        height: 50px;
+        width: 100px;
+    }
+    header{
+        
+        height: 70px;
+        
+    }
+    header ul{
+        margin-top: -10px;
+        margin-right: 20px;
+    
+    }
+    header h1 {
+        padding-top: 10px;
+       font-size: 30px;
+    }
+    nav ul li a{
+        font-size: 11px;
+    
+    }
+}
